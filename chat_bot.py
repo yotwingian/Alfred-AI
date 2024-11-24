@@ -12,7 +12,7 @@ if not OPENAI_API_KEY:
 openai.api_key = OPENAI_API_KEY
 
 # Helper function to validate document length
-def validate_document_length(content: str, max_length: int = 3000) -> str:
+def validate_document_length(content: str, max_length: int = 8000) -> str:
     if len(content) > max_length:
         return content[:max_length] + "..."
     return content
@@ -36,9 +36,9 @@ def chatbot_response(user_input: str, document_content: str) -> str:
                 {
                     "role": "system",
                     "content": (
-                        "You only answer questions related to this document: "
+                        "You are a helpful H&M assistant. Answer questions based on this document: "
                         + document_content
-                        + ". If you can't answer the question, refer to customer service."
+                        + ". Be concise and accurate.If you can't answer the question, refer to customer service.'"
                     ),
                 },
                 {"role": "user", "content": user_input},
