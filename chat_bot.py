@@ -30,19 +30,31 @@ def load_document(file_path: str) -> str:
 # Function to handle chatbot responses
 def chatbot_response(user_input: str, document_content: str) -> str:
     try:
+        # Build conversation history from session state
+        messages = [
+            {
+                "role": "system",
+                "content": (
+                    "You are a helpful H&M assistant. Answer questions based on this document: "
+                    + document_content
+                    + ". Be concise and accurate. If you can't answer the question, refer to customer service."
+                ),
+            }
+        ]
+        
+        # Add conversation history
+        for message in st.session_state.history:
+            messages.append({
+                "role": message["role"],
+                "content": message["content"]
+            })
+            
+        # Add current user input
+        messages.append({"role": "user", "content": user_input})
+        
         response = openai.ChatCompletion.create(
             model="gpt-4o-mini",
-            messages=[
-                {
-                    "role": "system",
-                    "content": (
-                        "You are a helpful H&M assistant. Answer questions based on this document: "
-                        + document_content
-                        + ". Be concise and accurate.If you can't answer the question, refer to customer service.'"
-                    ),
-                },
-                {"role": "user", "content": user_input},
-            ],
+            messages=messages
         )
         return response['choices'][0]['message']['content']
     except Exception as e:
