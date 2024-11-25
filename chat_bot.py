@@ -1,19 +1,18 @@
 import os
-import openai
+from openai import OpenAI 
 import streamlit as st
 
-# Check for API key
-OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+# Get API key from environment
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')   # (if you have set it as an environment variable)
+# OPENAI_API_KEY = "sk-your-actual-key-here")  # Uncomment and replace with your actual key   
+
+# Check for API key before client initialization
 if not OPENAI_API_KEY:
     st.error("API key not found! Please set your OPENAI_API_KEY environment variable.")
     st.stop()
 
-    # Here the variable "OPENAI_API_KEY" should contain the token that 
-    # you have "bought" and "created" from "openai api" (as "..." which is a 
-    # long string with letters and numbers) or it is loaded as envronmental 
-    # variables in "windows" by using "os.getenv("...")" command.
-        
-openai.api_key = OPENAI_API_KEY
+# Initialize the client only if API key exists
+client = OpenAI(api_key=OPENAI_API_KEY)
 
 # Helper function to validate document length
 def validate_document_length(content: str, max_length: int = 8000) -> str:
@@ -56,11 +55,15 @@ def chatbot_response(user_input: str, document_content: str) -> str:
         # Add current user input
         messages.append({"role": "user", "content": user_input})
         
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=messages
         )
-        return response['choices'][0]['message']['content']
+        
+        # Update response handling for new API
+        assistant_response = response.choices[0].message.content
+                      
+        return assistant_response
     except Exception as e:
         st.error(f"Error while processing your request: {e}")
         return "Sorry, I couldn't process your request."
