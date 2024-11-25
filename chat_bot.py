@@ -8,6 +8,11 @@ if not OPENAI_API_KEY:
     st.error("API key not found! Please set your OPENAI_API_KEY environment variable.")
     st.stop()
 
+    # Here the variable "OPENAI_API_KEY" should contain the token that 
+    # you have "bought" and "created" from "openai api" (as "..." which is a 
+    # long string with letters and numbers) or it is loaded as envronmental 
+    # variables in "windows" by using "os.getenv("...")" command.
+        
 openai.api_key = OPENAI_API_KEY
 
 # Helper function to validate document length
