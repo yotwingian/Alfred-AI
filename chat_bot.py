@@ -89,7 +89,7 @@ def main() -> None:
 
     # Show the welcome message
     if not st.session_state.hello_message:
-        response = "Hej jag heter Alfred och jag är HM's AI assistent, vad kan jag hjälpa dig med?"
+        response = "Hi my name is Alfred and I'm HM's AI assistant, what can I help you with?"
         with st.chat_message("assistant"):
             st.markdown(response)
         st.session_state.history.append({"role": "assistant", "content": response})
