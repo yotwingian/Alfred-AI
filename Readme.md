@@ -38,3 +38,7 @@ Chatbot Alfred is an AI assistant designed to answer questions based on an txt d
 - You also change to another LLM instead of open AI gpt.
 -  The function `validate_document_length` can be adjusted to change the maximum content length.
 -  Modify the `system_message` in the `chatbot_response` function to customize the assistant's role and behavior.
+
+## The FAQ 
+
+ The faq file is a from Hm's(clothing brand) actual swedish home page. Here it only serves as an example of contextfile.
